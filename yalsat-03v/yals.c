@@ -1172,6 +1172,12 @@ static int yals_pick_literal (Yals * yals, int cidx) {
 #endif
     LOG ("picked literal %d weigted break %d score %g", lit, w, s);
 
+    unsigned int pos = 0, idx;
+    for (idx = 1; idx < 702; idx++)
+      if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
+
+    LOG ("[[[NNN]]] there are %d positive literals", pos);
+
     CLEAR (yals->scores);
   }
 
