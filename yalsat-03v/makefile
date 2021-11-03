@@ -1,6 +1,6 @@
 MAKEFLAGS=-j $(if $(CORES),$(CORES),1)
 CC=gcc
-CFLAGS=-Wall -DNDEBUG -O3
+CFLAGS=-Wall -g3
 LIBS=-lm
 all: yalsat palsat libyals.a
 yalsat: main.o libyals.a makefile
