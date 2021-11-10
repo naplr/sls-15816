@@ -28,6 +28,11 @@
 
 /*------------------------------------------------------------------------*/
 
+#define POS_LOWER_BOUND 100
+#define IMP_VAR_NUM 702
+
+/*------------------------------------------------------------------------*/
+
 #define YALS_INT64_MAX		(0x7fffffffffffffffll)
 #define YALS_DEFAULT_PREFIX	"c "
 
@@ -842,7 +847,7 @@ static void yals_report (Yals * yals, const char * fmt, ...) {
   for (idx = 1; idx < 608; idx++)
     if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
   fprintf (yals->out,
-    " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec %d pos \n,",
+    " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec %d pos \n",
     yals->stats.best, yals->stats.tmp, f/1e3, t, yals_avg (f/1e3, t), pos);
 
   // fprintf (yals->out,
@@ -1134,16 +1139,16 @@ static int yals_pick_literal (Yals * yals, int cidx) {
   lits = yals_lits (yals, cidx);
 
   unsigned int pos = 0, idx, borderline = 0;
-  for (idx = 1; idx < 702 && pos <= 100; idx++)
+  for (idx = 1; idx < IMP_VAR_NUM && pos <= POS_LOWER_BOUND; idx++)
     if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
-  if (pos <= 100) {
+  if (pos <= POS_LOWER_BOUND) {
     borderline = 1;
-    yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
+    // yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
   }
 
   zero = 0;
   for (p = lits; (lit = *p); p++) {
-    if (borderline && lit < 702 && GETBIT (yals->vals, yals->nvarwords, idx)) continue;
+    if (borderline && lit < IMP_VAR_NUM && GETBIT (yals->vals, yals->nvarwords, idx)) continue;
 
     w = yals_determine_weighted_break (yals, lit);
     LOG ("literal %d weighted break %u", lit, w);
@@ -1903,14 +1908,16 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  // } else if (yals->strat.pol < 0) {
-  //   yals->stats.pick.neg++;
-  //   yals_msg (yals, vl, "picking all negative assignment");
-  //   memset (yals->vals, 0, bytes);
-  // } else if (yals->strat.pol > 0) {
-  //   yals->stats.pick.pos++;
-  //   yals_msg (yals, vl, "picking all positive assignment");
-  //   memset (yals->vals, 0xff, bytes);
+  } else if (yals->strat.pol < 0) {
+    yals->stats.pick.neg++;
+    yals_msg (yals, vl, "picking all negative assignment");
+    memset (yals->vals, 0, bytes);
+    yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
+  } else if (yals->strat.pol > 0) {
+    yals->stats.pick.pos++;
+    yals_msg (yals, vl, "picking all positive assignment");
+    memset (yals->vals, 0xff, bytes);
+    yals_msg(yals, 1, "[[[ NR ]]] Pick pos");
   } else {
     yals->stats.pick.rnd++;
     yals_msg (yals, vl, "picking new random assignment");
