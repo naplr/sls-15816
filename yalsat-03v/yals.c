@@ -837,9 +837,17 @@ static void yals_report (Yals * yals, const char * fmt, ...) {
   va_start (ap, fmt);
   vfprintf (yals->out, fmt, ap);
   va_end (ap);
+
+  unsigned int pos = 0, idx = 0;
+  for (idx = 1; idx < 608; idx++)
+    if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
   fprintf (yals->out,
-    " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec\n",
-    yals->stats.best, yals->stats.tmp, f/1e3, t, yals_avg (f/1e3, t));
+    " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec %d pos \n,",
+    yals->stats.best, yals->stats.tmp, f/1e3, t, yals_avg (f/1e3, t), pos);
+
+  // fprintf (yals->out,
+  //   " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec\n,",
+  //   yals->stats.best, yals->stats.tmp, f/1e3, t, yals_avg (f/1e3, t));
   fflush (yals->out);
   yals_msgunlock (yals);
 }
@@ -1125,14 +1133,34 @@ static int yals_pick_literal (Yals * yals, int cidx) {
 
   lits = yals_lits (yals, cidx);
 
+  unsigned int pos = 0, idx, borderline = 0;
+  for (idx = 1; idx < 702 && pos <= 100; idx++)
+    if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
+  if (pos <= 100) {
+    borderline = 1;
+    yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
+  }
+
   zero = 0;
   for (p = lits; (lit = *p); p++) {
+    if (borderline && lit < 702 && GETBIT (yals->vals, yals->nvarwords, idx)) continue;
+
     w = yals_determine_weighted_break (yals, lit);
     LOG ("literal %d weighted break %u", lit, w);
     if (pick_break_zero && !w) {
       if (!zero++) CLEAR (yals->cands);
       PUSH (yals->cands, lit);
     } else if (!zero) {
+      PUSH (yals->breaks, w);
+      PUSH (yals->cands, lit);
+    }
+  }
+
+  if (borderline && COUNT (yals->cands) == 0) {
+    return 0;
+    // yals_msg (yals, 1, "[[[ NR ]]] have zero cand");
+    for (p = lits; (lit = *p); p++) {
+      w = yals_determine_weighted_break (yals, lit);
       PUSH (yals->breaks, w);
       PUSH (yals->cands, lit);
     }
@@ -1146,7 +1174,6 @@ static int yals_pick_literal (Yals * yals, int cidx) {
     LOG ("picked random break zero literal %d out of %d", lit, zero);
 
   } else {
-
     const unsigned * wbs = yals->breaks.start;
     const unsigned n = COUNT (yals->breaks);
     unsigned i;
@@ -1172,14 +1199,23 @@ static int yals_pick_literal (Yals * yals, int cidx) {
 #endif
     LOG ("picked literal %d weigted break %d score %g", lit, w, s);
 
-    unsigned int pos = 0, idx;
-    for (idx = 1; idx < 702; idx++)
-      if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
-
-    LOG ("[[[NNN]]] there are %d positive literals", pos);
-
     CLEAR (yals->scores);
   }
+  // } else {
+  //     unsigned int count = 0;
+  //     for (p = lits; (lit = *p); p++) {
+  //       count++;
+  //     }
+  //     lit = yals->cands.start[yals_rand_mod (yals, count)];
+  //     LOG ("[[[NNN]]] picked random literal %d", lit);
+  //   }
+  // }
+
+      // unsigned int pos = 0, idx;
+      // for (idx = 1; idx < 702; idx++)
+      //   if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
+
+      // LOG ("[[[NNN]]] there are %d positive literals", pos);
 
   CLEAR (yals->cands);
   CLEAR (yals->breaks);
@@ -1500,8 +1536,13 @@ static void yals_update_minimum (Yals * yals) {
 }
 
 static void yals_flip (Yals * yals) {
-  int cidx = yals_pick_clause (yals);
-  int lit = yals_pick_literal (yals, cidx);
+  int cidx, lit = 0;
+  while (lit == 0) {
+    cidx = yals_pick_clause (yals);
+    // yals_msg(yals, 1, "[[[ NR ]]] Pick clause: %d", cidx);
+    lit = yals_pick_literal (yals, cidx);
+    // yals_msg(yals, 1, "[[[ NR ]]] Pick lit: %d", lit);
+  }
   yals->stats.flips++;
   yals->stats.unsum += yals_nunsat (yals);
   yals_flip_value_of_lit (yals, lit);
@@ -1633,7 +1674,7 @@ static Word yals_primes[] = {
   2000000273u, 2000000279u, 2000000293u, 2000000323u, 2000000333u,
   2000000357u, 2000000381u, 2000000393u, 2000000407u, 2000000413u,
   2000000441u, 2000000503u, 2000000507u, 2000000531u, 2000000533u,
-  2000000579u, 2000000603u, 2000000609u, 2000000621u, 2000000641u,
+  2000000579u, 2000000603u, 2000000609u, 2000000702u, 2000000641u,
   2000000659u, 2000000671u, 2000000693u, 2000000707u, 2000000731u,
 };
 
@@ -1862,14 +1903,14 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  } else if (yals->strat.pol < 0) {
-    yals->stats.pick.neg++;
-    yals_msg (yals, vl, "picking all negative assignment");
-    memset (yals->vals, 0, bytes);
-  } else if (yals->strat.pol > 0) {
-    yals->stats.pick.pos++;
-    yals_msg (yals, vl, "picking all positive assignment");
-    memset (yals->vals, 0xff, bytes);
+  // } else if (yals->strat.pol < 0) {
+  //   yals->stats.pick.neg++;
+  //   yals_msg (yals, vl, "picking all negative assignment");
+  //   memset (yals->vals, 0, bytes);
+  // } else if (yals->strat.pol > 0) {
+  //   yals->stats.pick.pos++;
+  //   yals_msg (yals, vl, "picking all positive assignment");
+  //   memset (yals->vals, 0xff, bytes);
   } else {
     yals->stats.pick.rnd++;
     yals_msg (yals, vl, "picking new random assignment");
