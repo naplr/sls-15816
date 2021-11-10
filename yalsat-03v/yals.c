@@ -1144,9 +1144,9 @@ static int yals_pick_literal (Yals * yals, int cidx) {
   for (idx = 1; idx < IMP_VAR_NUM && pos <= POS_LOWER_BOUND; idx++)
     if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
   if (pos <= POS_LOWER_BOUND) {
-    // yals->nr_restart = 1;
+    yals->nr_restart = 1;
   //   borderline = 1;
-    yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
+    // yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
   }
 
   zero = 0;
@@ -1915,11 +1915,11 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  // } else if (yals->strat.pol < 0) {
-  //   yals->stats.pick.neg++;
-  //   yals_msg (yals, vl, "picking all negative assignment");
-  //   memset (yals->vals, 0, bytes);
-  //   // yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
+  } else if (yals->strat.pol < 0) {
+    yals->stats.pick.neg++;
+    yals_msg (yals, vl, "picking all negative assignment");
+    memset (yals->vals, 0, bytes);
+    // yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
   } else if (yals->strat.pol > 0) {
     yals->stats.pick.pos++;
     yals_msg (yals, vl, "picking all positive assignment");
