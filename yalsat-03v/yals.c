@@ -28,8 +28,8 @@
 
 /*------------------------------------------------------------------------*/
 
-#define POS_LOWER_BOUND 100
-#define IMP_VAR_NUM 702
+#define POS_LOWER_BOUND 50
+#define IMP_VAR_NUM 729
 
 /*------------------------------------------------------------------------*/
 
@@ -425,6 +425,7 @@ struct Yals {
   Mem mem;
   FPU fpu;
   Exp exp;
+  int nr_restart;
 };
 
 /*------------------------------------------------------------------------*/
@@ -844,7 +845,7 @@ static void yals_report (Yals * yals, const char * fmt, ...) {
   va_end (ap);
 
   unsigned int pos = 0, idx = 0;
-  for (idx = 1; idx < 608; idx++)
+  for (idx = 1; idx < IMP_VAR_NUM; idx++)
     if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
   fprintf (yals->out,
     " : best %d (tmp %d), kflips %.0f, %.2f sec, %.2f kflips/sec %d pos \n",
@@ -1138,17 +1139,19 @@ static int yals_pick_literal (Yals * yals, int cidx) {
 
   lits = yals_lits (yals, cidx);
 
-  unsigned int pos = 0, idx, borderline = 0;
+  // unsigned int pos = 0, idx, borderline = 0;
+  unsigned int pos = 0, idx;
   for (idx = 1; idx < IMP_VAR_NUM && pos <= POS_LOWER_BOUND; idx++)
     if (GETBIT (yals->vals, yals->nvarwords, idx)) pos++;
   if (pos <= POS_LOWER_BOUND) {
-    borderline = 1;
-    // yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
+    // yals->nr_restart = 1;
+  //   borderline = 1;
+    yals_msg (yals, 1, "[[[ NR ]]] Borderline: %d", pos);
   }
 
   zero = 0;
   for (p = lits; (lit = *p); p++) {
-    if (borderline && lit < IMP_VAR_NUM && GETBIT (yals->vals, yals->nvarwords, idx)) continue;
+    // if (borderline && lit < IMP_VAR_NUM && GETBIT (yals->vals, yals->nvarwords, idx)) continue;
 
     w = yals_determine_weighted_break (yals, lit);
     LOG ("literal %d weighted break %u", lit, w);
@@ -1161,15 +1164,15 @@ static int yals_pick_literal (Yals * yals, int cidx) {
     }
   }
 
-  if (borderline && COUNT (yals->cands) == 0) {
-    return 0;
-    // yals_msg (yals, 1, "[[[ NR ]]] have zero cand");
-    for (p = lits; (lit = *p); p++) {
-      w = yals_determine_weighted_break (yals, lit);
-      PUSH (yals->breaks, w);
-      PUSH (yals->cands, lit);
-    }
-  }
+  // if (borderline && COUNT (yals->cands) == 0) {
+  //   return 0;
+  //   // yals_msg (yals, 1, "[[[ NR ]]] have zero cand");
+  //   for (p = lits; (lit = *p); p++) {
+  //     w = yals_determine_weighted_break (yals, lit);
+  //     PUSH (yals->breaks, w);
+  //     PUSH (yals->cands, lit);
+  //   }
+  // }
 
   if (zero) {
 
@@ -1542,12 +1545,16 @@ static void yals_update_minimum (Yals * yals) {
 
 static void yals_flip (Yals * yals) {
   int cidx, lit = 0;
-  while (lit == 0) {
-    cidx = yals_pick_clause (yals);
-    // yals_msg(yals, 1, "[[[ NR ]]] Pick clause: %d", cidx);
-    lit = yals_pick_literal (yals, cidx);
-    // yals_msg(yals, 1, "[[[ NR ]]] Pick lit: %d", lit);
-  }
+  // while (lit == 0) {
+  //   cidx = yals_pick_clause (yals);
+  //   // yals_msg(yals, 1, "[[[ NR ]]] Pick clause: %d", cidx);
+  //   lit = yals_pick_literal (yals, cidx);
+  //   // yals_msg(yals, 1, "[[[ NR ]]] Pick lit: %d", lit);
+  // }
+
+  cidx = yals_pick_clause (yals);
+  lit = yals_pick_literal (yals, cidx);
+
   yals->stats.flips++;
   yals->stats.unsum += yals_nunsat (yals);
   yals_flip_value_of_lit (yals, lit);
@@ -1908,18 +1915,19 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  } else if (yals->strat.pol < 0) {
-    yals->stats.pick.neg++;
-    yals_msg (yals, vl, "picking all negative assignment");
-    memset (yals->vals, 0, bytes);
-    yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
+  // } else if (yals->strat.pol < 0) {
+  //   yals->stats.pick.neg++;
+  //   yals_msg (yals, vl, "picking all negative assignment");
+  //   memset (yals->vals, 0, bytes);
+  //   // yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
   } else if (yals->strat.pol > 0) {
     yals->stats.pick.pos++;
     yals_msg (yals, vl, "picking all positive assignment");
     memset (yals->vals, 0xff, bytes);
-    yals_msg(yals, 1, "[[[ NR ]]] Pick pos");
+    // yals_msg(yals, 1, "[[[ NR ]]] Pick pos");
   } else {
     yals->stats.pick.rnd++;
+    // yals_msg(yals, 1, "[[[ NR ]]] Pick random");
     yals_msg (yals, vl, "picking new random assignment");
     for (i = 0; i < yals->nvarwords; i++)
       yals->vals[i] = yals_rand (yals);
@@ -2846,7 +2854,7 @@ static int yals_need_to_restart_inner (Yals * yals) {
   if (yals->uniform && 
       yals->stats.restart.inner.count >= yals->opts.unirestarts.val)
     return 0;
-  return yals->stats.flips >= yals->limits.restart.inner.lim;
+  return yals->stats.flips >= yals->limits.restart.inner.lim || yals->nr_restart;
 }
 
 static int yals_need_to_restart_outer (Yals * yals) {
@@ -2854,6 +2862,10 @@ static int yals_need_to_restart_outer (Yals * yals) {
 }
 
 static void yals_restart_inner (Yals * yals) {
+  // if (yals->nr_restart == 1) {
+  //   yals_msg (yals, 1, "[[NR]] nr_restart");
+  // }
+  yals->nr_restart = 0;
   double start;
   assert (yals_need_to_restart_inner (yals));
   start = yals_time (yals);
