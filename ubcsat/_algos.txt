@@ -1,0 +1,41 @@
+-alg gsat
+-alg gsat -v simple
+-alg gwsat
+-alg gsat-tabu
+-alg hsat
+-alg hwsat
+-alg jack
+-alg walksat
+-alg walksat-tabu
+-alg novelty
+-alg novelty+
+-alg novelty+ -v cache
+-alg novelty++
+-alg novelty+p
+-alg adaptnovelty+
+-alg adaptnovelty+ -v params
+-alg rnovelty
+-alg rnovelty+
+-alg saps
+-alg rsaps
+-alg sapsnr
+-alg paws
+-alg ddfw
+-alg g2wsat
+-alg adaptg2wsat
+-alg sparrow
+-alg sparrow -v sat11
+-alg vw1
+-alg vw2
+-alg vw2 -v 2005
+-alg rots
+-alg irots
+-alg samd
+-alg urwalk
+-alg crwalk
+-alg crwalk -v schoening
+-alg lllwalk
+-alg dcrwalk
+-alg danov+
+-alg rgsat
+-alg walksat-tabu -v nonull

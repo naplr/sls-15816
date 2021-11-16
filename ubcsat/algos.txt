@@ -1,0 +1,3 @@
+gsat
+gsat -v simple
+gwsat
