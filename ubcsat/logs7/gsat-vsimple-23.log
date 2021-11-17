@@ -5,4 +5,71 @@
 # 
 # ubcsat -h for help
 # 
-Fatal Error: Invalid filename [file] specified 
+#  -alg gsat -v simple
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1228045075 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   373                77520              1000000
+      2 0   378               102189              1000000
+      3 0   360                66944              1000000
+      4 0   384                61670              1000000
+      5 0   354                71670              1000000
+      6 0   369                78639              1000000
+      7 0   374                74056              1000000
+      8 0   359                70209              1000000
+      9 0   359                64026              1000000
+     10 0   373                80435              1000000
+
+
+Variables = 21033
+Clauses = 186693
+TotalLiterals = 876879
+TotalCPUTimeElapsed = 361.100   
+FlipsPerSecond = 27693  
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 36.11
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 36.11
+
+

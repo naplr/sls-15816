@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat-tabu
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 847027751 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -tabu 10 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   466                58009              1000000
+      2 0   464                25033              1000000
+      3 0   435                49392              1000000
+      4 0   443                43372              1000000
+      5 0   435                26265              1000000
+      6 0   455                71147              1000000
+      7 0   429                29231              1000000
+      8 0   445                19917              1000000
+      9 0   484                18073              1000000
+     10 0   468                27244              1000000
+
+
+Variables = 19548
+Clauses = 180858
+TotalLiterals = 860814
+TotalCPUTimeElapsed = 8.850     
+FlipsPerSecond = 1129944
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 0.885
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 0.885
+
+

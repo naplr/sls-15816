@@ -20,7 +20,7 @@
 #  -strikes 0 
 #  -target 0 
 #  -wtarget 0 
-#  -seed 19452148 
+#  -seed 424660163 
 #  -solve 0
 #  -find,-numsol 0 
 #  -findunique 0 
@@ -45,31 +45,31 @@
 #   Run N Sol'n                   of               Search 
 #   No. D Found                 Best                Steps 
 # 
-      1 0   359                70018             10000000
-      2 0   358                39688             10000000
-      3 0   357                48414             10000000
-      4 0   377                39070             10000000
-      5 0   376                50911             10000000
-      6 0   354                73166             10000000
-      7 0   354                51251             10000000
-      8 0   331                47041             10000000
-      9 0   407                41721             10000000
-     10 0   373                45358             10000000
+      1 0   355                41065             10000000
+      2 0   371                42878             10000000
+      3 0   361                44367             10000000
+      4 0   360                45786             10000000
+      5 0   359                45635             10000000
+      6 0   402                54670             10000000
+      7 0   373                46551             10000000
+      8 0   353                40920             10000000
+      9 0   356                46471             10000000
+     10 0   355                45700             10000000
 
 
 Variables = 19548
 Clauses = 180858
 TotalLiterals = 860814
-TotalCPUTimeElapsed = 53.950    
-FlipsPerSecond = 1853568
+TotalCPUTimeElapsed = 65.100    
+FlipsPerSecond = 1536098
 RunsExecuted = 10
 SuccessfulRuns = 0
 PercentSuccess = 0.00  
 Steps_Mean = 10000000
 Steps_CoeffVariance = 0
 Steps_Median = 10000000
-CPUTime_Mean = 5.395
+CPUTime_Mean = 6.51
 CPUTime_CoeffVariance = 0
-CPUTime_Median = 5.395
+CPUTime_Median = 6.51
 
 

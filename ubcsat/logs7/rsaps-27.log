@@ -1,0 +1,80 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg rsaps
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 883638453 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -alpha 1.3 
+#  -rho 0.8 
+#  -ps 0.05 
+#  -wp 0.01 
+#  -sapsthresh -0.1 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   246               650781              1000000
+      2 0   297               594982              1000000
+      3 0   292               501388              1000000
+      4 0   301               637710              1000000
+      5 0   308               733713              1000000
+      6 0   325               747329              1000000
+      7 0   308               989003              1000000
+      8 0   275               945048              1000000
+      9 0   295               821469              1000000
+     10 0   247               934346              1000000
+
+
+Variables = 24786
+Clauses = 221697
+TotalLiterals = 1046115
+TotalCPUTimeElapsed = 27.580    
+FlipsPerSecond = 362582 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 2.758
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 2.758
+
+

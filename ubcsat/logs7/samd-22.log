@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg samd
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1007610461 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -tabu 10 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   369                40150              1000000
+      2 0   348                47826              1000000
+      3 0   375                43631              1000000
+      4 0   380                46488              1000000
+      5 0   362                43332              1000000
+      6 0   366                45565              1000000
+      7 0   359                45201              1000000
+      8 0   394                50750              1000000
+      9 0   370                56946              1000000
+     10 0   356                40873              1000000
+
+
+Variables = 19548
+Clauses = 180858
+TotalLiterals = 860814
+TotalCPUTimeElapsed = 210.480   
+FlipsPerSecond = 47510  
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 21.048
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 21.048
+
+

@@ -1,0 +1,77 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat-tabu -v nonull
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 975886453 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -tabu 10 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|agemean|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# agemean: Mean age of variables when flipped
+# 
+#       F  Best                 Step                Total    Mean 
+#   Run N Sol'n                   of               Search  Age of 
+#   No. D Found                 Best                Steps    Vars 
+# 
+      1 0   487                41768              1000000 20399.8
+      2 0   485                24455              1000000 20378.2
+      3 0   475                37569              1000000 20510.5
+      4 0   511                47269              1000000 20477.2
+      5 0   576               140332              1000000 20361.0
+      6 0   509                23464              1000000 20407.6
+      7 0   559                89206              1000000 20418.2
+      8 0   562               145438              1000000 20424.7
+      9 0   510                31362              1000000 20431.9
+     10 0   485                39535              1000000 20496.8
+
+
+Variables = 21789
+Clauses = 192528
+TotalLiterals = 898776
+TotalCPUTimeElapsed = 9.470     
+FlipsPerSecond = 1055966
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 0.947
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 0.947
+
+

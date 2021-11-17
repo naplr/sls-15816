@@ -1,0 +1,75 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg crwalk -v schoening
+#  -runs 10 
+#  -cutoff 1000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1932042517 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 69903 
+#  -prestart 0 
+#  -drestart 0 
+# 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0  5165               139744              1000000
+      2 0  5029               558538              1000000
+      3 0  5153               838075              1000000
+      4 0  5095               698851              1000000
+      5 0  4924               419287              1000000
+      6 0  5081               205888              1000000
+      7 0  5064               698065              1000000
+      8 0  5066               489092              1000000
+      9 0  5104               209054              1000000
+     10 0  5145               838360              1000000
+
+
+Variables = 23301
+Clauses = 215862
+TotalLiterals = 1030050
+TotalCPUTimeElapsed = 10.020    
+FlipsPerSecond = 998004 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 1000000
+Steps_CoeffVariance = 0
+Steps_Median = 1000000
+CPUTime_Mean = 1.002
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 1.002
+
+

@@ -28,8 +28,8 @@
 
 /*------------------------------------------------------------------------*/
 
-#define POS_LOWER_BOUND 50
-#define IMP_VAR_NUM 729
+#define POS_LOWER_BOUND 100
+#define IMP_VAR_NUM 702
 
 /*------------------------------------------------------------------------*/
 
@@ -1915,15 +1915,15 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  } else if (yals->strat.pol < 0) {
-    yals->stats.pick.neg++;
-    yals_msg (yals, vl, "picking all negative assignment");
-    memset (yals->vals, 0, bytes);
-    // yals_msg(yals, 1, "[[[ NR ]]] Pick neg");
-  } else if (yals->strat.pol > 0) {
-    yals->stats.pick.pos++;
-    yals_msg (yals, vl, "picking all positive assignment");
-    memset (yals->vals, 0xff, bytes);
+  /*} else if (yals->strat.pol < 0) {*/
+    /*yals->stats.pick.neg++;*/
+    /*yals_msg (yals, vl, "picking all negative assignment");*/
+    /*memset (yals->vals, 0, bytes);*/
+    /*// yals_msg(yals, 1, "[[[ NR ]]] Pick neg");*/
+  /*} else if (yals->strat.pol > 0) {*/
+    /*yals->stats.pick.pos++;*/
+    /*yals_msg (yals, vl, "picking all positive assignment");*/
+    /*memset (yals->vals, 0xff, bytes);*/
     // yals_msg(yals, 1, "[[[ NR ]]] Pick pos");
   } else {
     yals->stats.pick.rnd++;
