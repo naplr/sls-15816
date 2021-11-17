@@ -28,7 +28,7 @@
 
 /*------------------------------------------------------------------------*/
 
-#define POS_LOWER_BOUND 100
+#define POS_LOWER_BOUND 189
 #define IMP_VAR_NUM 702
 
 /*------------------------------------------------------------------------*/
@@ -349,7 +349,7 @@ typedef struct Limits {
   int64_t mems;
 #endif
   int64_t flips;
-  struct { 
+  struct {
     struct { int64_t lim, interval; } outer;
     struct { int64_t lim; union { int64_t interval; RDS rds; }; } inner;
   } restart;
@@ -370,7 +370,7 @@ typedef union Chunk {
 typedef struct Queue {
   int count, chunksize, nchunks, nlnks, nfree;
   Lnk * first, * last, * free;
-  Chunk * chunks; 
+  Chunk * chunks;
 } Queue;
 
 typedef struct Exp {
@@ -873,7 +873,7 @@ static void yals_save_new_minimum (Yals * yals) {
     yals->stats.tmp = nunsat;
   }
   if (yals->stats.best < nunsat) return;
-  if (yals->stats.best == nunsat) { 
+  if (yals->stats.best == nunsat) {
     LOG ("minimum %d matches previous overall best assignment", nunsat);
     yals->stats.hits++;
     return;
@@ -1078,10 +1078,10 @@ yals_compute_score_from_weighted_break (Yals * yals, unsigned w) {
   double s;
 
   if (yals->strat.correct)
-    s = (w < yals->exp.max.cb) ? 
+    s = (w < yals->exp.max.cb) ?
           PEEK (yals->exp.table.cb, w) : yals->exp.eps.cb;
   else
-    s = (w < yals->exp.max.two) ? 
+    s = (w < yals->exp.max.two) ?
           PEEK (yals->exp.table.two, w) : yals->exp.eps.two;
 
   assert (s);
@@ -1610,7 +1610,7 @@ static void yals_preprocess (Yals * yals) {
 	c = yals->cdb.start + occ;
 	assert (c < yals->cdb.top);
 	if (c[1] != -lit) SWAP (int, c[0], c[1]);
-	assert (c[1] == -lit); 
+	assert (c[1] == -lit);
 	if (vals[w0 = c[0]] > 0) continue;
 	for (q = c + 2; (other = *q); q++)
 	  if (vals[other] >= 0) break;
@@ -1894,7 +1894,7 @@ static void yals_pick_assignment (Yals * yals, int initial) {
   } else if (!initial && yals->opts.keep.val) {
     yals->stats.pick.keep++;
     yals_msg (yals, vl, "picking current assignment (actually keeping it)");
-  } else if (!initial && 
+  } else if (!initial &&
              yals->strat.cached &&
 	     (ncache = COUNT (yals->cache)) > 0) {
     if (!yals->opts.cacheduni.val)  {
@@ -1924,7 +1924,7 @@ static void yals_pick_assignment (Yals * yals, int initial) {
     /*yals->stats.pick.pos++;*/
     /*yals_msg (yals, vl, "picking all positive assignment");*/
     /*memset (yals->vals, 0xff, bytes);*/
-    // yals_msg(yals, 1, "[[[ NR ]]] Pick pos");
+     /*[>yals_msg(yals, 1, "[[[ NR ]]] Pick pos");<]*/
   } else {
     yals->stats.pick.rnd++;
     // yals_msg(yals, 1, "[[[ NR ]]] Pick random");
@@ -2676,7 +2676,7 @@ void yals_add (Yals * yals, int lit) {
     if (yals->trivial) yals->trivial = 0;
     else yals_new_clause (yals);
     CLEAR (yals->clause);
-  } 
+  }
 }
 
 /*------------------------------------------------------------------------*/
@@ -2725,7 +2725,7 @@ do { \
 #undef STRAT
 #define STRAT DEFSTRAT
 
-static void yals_set_default_strategy (Yals * yals) { 
+static void yals_set_default_strategy (Yals * yals) {
   STRATSTEMPLATE
   yals->stats.strat.def++;
 }
@@ -2763,7 +2763,7 @@ do { \
 #undef STRAT
 #define STRAT RANDSTRAT
 
-static void yals_set_random_strategy (Yals * yals) { 
+static void yals_set_random_strategy (Yals * yals) {
   STRATSTEMPLATE
   assert (yals->stats.restart.inner.count > 1);
   yals->stats.strat.rnd++;
@@ -2851,7 +2851,7 @@ static int yals_inc_inner_restart_interval (Yals * yals) {
 }
 
 static int yals_need_to_restart_inner (Yals * yals) {
-  if (yals->uniform && 
+  if (yals->uniform &&
       yals->stats.restart.inner.count >= yals->opts.unirestarts.val)
     return 0;
   return yals->stats.flips >= yals->limits.restart.inner.lim || yals->nr_restart;
@@ -2947,7 +2947,7 @@ static int yals_inner_loop (Yals * yals) {
 static void yals_init_outer_restart_interval (Yals * yals) {
   if (yals->opts.restartouter.val) {
     yals->limits.restart.outer.interval = yals_outer_restart_interval (yals);
-    yals->limits.restart.outer.lim = 
+    yals->limits.restart.outer.lim =
       yals->stats.flips + yals->limits.restart.outer.interval;
     yals_msg (yals, 1,
       "initial outer restart limit at %lld flips",
@@ -3088,7 +3088,7 @@ int yals_sat (Yals * yals) {
   yals_outer_loop (yals);
 
   assert (!yals->mt);
-  if (!yals->stats.best) { 
+  if (!yals->stats.best) {
     yals_print_strategy (yals, "winning strategy:", 1);
     yals_check_assignment (yals);
     res = 10;
@@ -3117,7 +3117,7 @@ int yals_minimum (Yals * yals) { return yals->stats.best; }
 
 long long yals_flips (Yals * yals) { return yals->stats.flips; }
 
-long long yals_mems (Yals * yals) { 
+long long yals_mems (Yals * yals) {
 #ifndef NYALSMEMS
   return yals->stats.mems.all;
 #else
@@ -3127,7 +3127,7 @@ long long yals_mems (Yals * yals) {
 
 int yals_lkhd (Yals * yals) {
   int res = yals_lkhd_internal (yals);
-  if (res) 
+  if (res)
     yals_msg (yals, 1,
       "look ahead literal %d flipped %lld times",
       res, (long long) yals->flips [ABS (res)]);

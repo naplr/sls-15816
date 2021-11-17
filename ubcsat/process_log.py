@@ -14,13 +14,11 @@ if __name__ == '__main__':
                 lines = f.readlines()
 
                 idx = 0
-                while lines[idx].startswith('#'): 
-                    idx += 1 
+                while lines[idx].startswith('#'):
+                    idx += 1
 
                 bests = process_lines(lines[idx:idx+10])
 
                 out.write(
-                    '{}\t{}\t{}\t{}\n'.format(num, fp[:-6], max(bests), np.mean(bests))
+                    '{}\t{}\t{}\t{}\n'.format(num, fp[:-6], min(bests), np.mean(bests))
                 )
-            
-                
