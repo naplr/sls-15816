@@ -7,7 +7,7 @@
 # 
 #  -alg walksat
 #  -runs 10 
-#  -cutoff 1000000 
+#  -cutoff 10000000 
 #  -timeout 0 
 #  -gtimeout 0 
 #  -abstime 0
@@ -20,7 +20,7 @@
 #  -strikes 0 
 #  -target 0 
 #  -wtarget 0 
-#  -seed 1211100314 
+#  -seed 1757053704 
 #  -solve 0
 #  -find,-numsol 0 
 #  -findunique 0 
@@ -46,31 +46,31 @@
 #   Run N Sol'n                   of               Search 
 #   No. D Found                 Best                Steps 
 # 
-      1 0   437               111258              1000000
-      2 0   439               572608              1000000
-      3 0   461               173889              1000000
-      4 0   463               463686              1000000
-      5 0   435               843101              1000000
-      6 0   426               721692              1000000
-      7 0   449               926905              1000000
-      8 0   442               693354              1000000
-      9 0   403               959344              1000000
-     10 0   429               137040              1000000
+      1 0   428              7311084             10000000
+      2 0   418              2289600             10000000
+      3 0   413              1955442             10000000
+      4 0   414              4060482             10000000
+      5 0   422              6872733             10000000
+      6 0   400              4371401             10000000
+      7 0   433              6855889             10000000
+      8 0   421              2366706             10000000
+      9 0   413              1502302             10000000
+     10 0   426              8999511             10000000
 
 
 Variables = 23301
 Clauses = 215862
 TotalLiterals = 1030050
-TotalCPUTimeElapsed = 5.320     
-FlipsPerSecond = 1879699
+TotalCPUTimeElapsed = 78.550    
+FlipsPerSecond = 1273074
 RunsExecuted = 10
 SuccessfulRuns = 0
 PercentSuccess = 0.00  
-Steps_Mean = 1000000
+Steps_Mean = 10000000
 Steps_CoeffVariance = 0
-Steps_Median = 1000000
-CPUTime_Mean = 0.532
+Steps_Median = 10000000
+CPUTime_Mean = 7.855
 CPUTime_CoeffVariance = 0
-CPUTime_Median = 0.532
+CPUTime_Median = 7.855
 
 

@@ -20,7 +20,7 @@
 #  -strikes 0 
 #  -target 0 
 #  -wtarget 0 
-#  -seed 1915768140 
+#  -seed 48764924 
 #  -solve 0
 #  -find,-numsol 0 
 #  -findunique 0 
@@ -28,7 +28,7 @@
 #  -prestart 0 
 #  -drestart 0 
 # 
-#  -wp 0.06 
+#  -wp 0.96 
 # 
 # UBCSAT default output: 
 #    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
@@ -46,31 +46,31 @@
 #   Run N Sol'n                   of               Search 
 #   No. D Found                 Best                Steps 
 # 
-      1 0   413              4523311             10000000
-      2 0   443              4355601             10000000
-      3 0   438              6075917             10000000
-      4 0   438              9867135             10000000
-      5 0   458              2091729             10000000
-      6 0   446              9110905             10000000
-      7 0   482              5431649             10000000
-      8 0   479              8109968             10000000
-      9 0   472              8451973             10000000
-     10 0   449              8310080             10000000
+      1 0    39              4527773             10000000
+      2 0    41               401324             10000000
+      3 0    38              2621226             10000000
+      4 0    38              2869649             10000000
+      5 0    39              4843808             10000000
+      6 0    40              7332949             10000000
+      7 0    41              8341767             10000000
+      8 0    42              1078389             10000000
+      9 0    32              1871011             10000000
+     10 0    39              6644891             10000000
 
 
 Variables = 23301
 Clauses = 215862
 TotalLiterals = 1030050
-TotalCPUTimeElapsed = 82.000    
-FlipsPerSecond = 1219512
+TotalCPUTimeElapsed = 68.720    
+FlipsPerSecond = 1455180
 RunsExecuted = 10
 SuccessfulRuns = 0
 PercentSuccess = 0.00  
 Steps_Mean = 10000000
 Steps_CoeffVariance = 0
 Steps_Median = 10000000
-CPUTime_Mean = 8.2
+CPUTime_Mean = 6.872
 CPUTime_CoeffVariance = 0
-CPUTime_Median = 8.2
+CPUTime_Median = 6.872
 
 
