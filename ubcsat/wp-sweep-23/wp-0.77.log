@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 10000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 344430646 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.77 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0    30              4590044             10000000
+      2 0    32              4183076             10000000
+      3 0    31              6301025             10000000
+      4 0    31              1240070             10000000
+      5 0    31              7607319             10000000
+      6 0    31              6248147             10000000
+      7 0    34              4332843             10000000
+      8 0    25              7999774             10000000
+      9 0    34              6470048             10000000
+     10 0    33               780206             10000000
+
+
+Variables = 21033
+Clauses = 186693
+TotalLiterals = 876879
+TotalCPUTimeElapsed = 76.350    
+FlipsPerSecond = 1309758
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 10000000
+Steps_CoeffVariance = 0
+Steps_Median = 10000000
+CPUTime_Mean = 7.635
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 7.635
+
+

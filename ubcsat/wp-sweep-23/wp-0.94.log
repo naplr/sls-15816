@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 10000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 167702636 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.94 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0    35              9791934             10000000
+      2 0    36              3399174             10000000
+      3 0    34               617621             10000000
+      4 0    38               181403             10000000
+      5 0    34              3734700             10000000
+      6 0    37              7121462             10000000
+      7 0    41              6617310             10000000
+      8 0    36              2059768             10000000
+      9 0    33              6883627             10000000
+     10 0    34               333844             10000000
+
+
+Variables = 21033
+Clauses = 186693
+TotalLiterals = 876879
+TotalCPUTimeElapsed = 78.300    
+FlipsPerSecond = 1277139
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 10000000
+Steps_CoeffVariance = 0
+Steps_Median = 10000000
+CPUTime_Mean = 7.83
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 7.83
+
+
