@@ -1,0 +1,83 @@
+c YalSAT Yet Another Local Search Solver
+c Sequential Standalone Version
+c Version 03v b1316746d40f72f147cde3f4ec54fadbe0730427
+c Copyright (C) 2013-2016 by Armin Biere, JKU, Linz, Austria.
+c Released Fr 1. Mär 05:17:48 CET 2019
+c Compiled Wed Nov 24 15:40:16 UTC 2021
+c Linux napolco 4.9.0-8-amd64 x86_64
+c CC gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+c CFLAGS -Wall -DNDEBUG -O3
+c --best=0
+c --breakzero=0
+c --cached=1
+c --cacheduni=0
+c --cachemax=1024
+c --cachemin=1
+c --correct=0
+c --crit=1
+c --defrag=1
+c --fixed=4
+c --geomfreq=66
+c --hitlim=-1
+c --keep=0
+c --minchunksize=256
+c --pick=4
+c --pol=0
+c --prep=1
+c --rbfsrate=10
+c --reluctant=1
+c --restart=100000
+c --restartouter=0
+c --restartouterfactor=100
+c --setfpu=1
+c --termint=1000
+c --toggleuniform=0
+c --unfairfreq=50
+c --uni=0
+c --unipick=-1
+c --unirestarts=0
+c --verbose=1
+c --weight=5
+c --witness=1
+c using specified seed 22197
+c using specified flips limit 10000000
+c no mems limit set (by default)
+c parsing '../xor6cut/xor6cut-23.cnf'
+c parsed header 'p cnf 21033 186693'
+c clause variable ratio 8.88
+c finished parsing after 0.06 seconds
+c allocated 8.0 MB after parsing
+c new flips limit 10000000
+c set FPU mode to use double precision
+c found 50301 binary, 2916 ternary and 133476 large clauses
+c size of literal stack 1063572 (901005 for large clauses only)
+c connecting 186693 clauses
+c 21033 variables used out of 21034, 1 do not occur 0%
+c average clause length 4.70 (min 2, max 9)
+c using standard non-uniform strategy
+c clause variable ratio 8.876 = 186693 / 21033
+c average literal occurrence 41.69 (min 36, max 163)
+c picking clause by unfair BFS strategy
+c using queue for unsat clauses
+c 658 x 32-bit words per assignment (2632 bytes = 2 KB)
+c need 1 bytes per clause for counting satisfied literals
+c dynamically computing break values on-the-fly using critical literals
+c exponential base cb = 5.400000 for maxlen 9
+c exp2(<= -1573) = 4.94066e-324
+c pow(5.400000,(<= -647)) = 4.94066e-324
+c search limited by 10000000 flips
+c search not limited by the number of mems
+c outer restarts disabled
+c picking new random assignment
+c forcing 0 initial phases
+c new minimum : best 16807 (tmp 16807), kflips 0, 0.02 sec, 0.00 kflips/sec 321 pos 
+c restart 1 : best 16807 (tmp 16807), kflips 0, 0.02 sec, 0.00 kflips/sec 321 pos 
+c new minimum : best 8401 (tmp 8401), kflips 4, 0.02 sec, 180.17 kflips/sec 319 pos 
+c new minimum : best 4200 (tmp 4200), kflips 6, 0.03 sec, 231.11 kflips/sec 342 pos 
+c new minimum : best 2100 (tmp 2100), kflips 9, 0.03 sec, 279.28 kflips/sec 344 pos 
+c new minimum : best 1050 (tmp 1050), kflips 13, 0.04 sec, 358.47 kflips/sec 341 pos 
+c new minimum : best 525 (tmp 525), kflips 22, 0.05 sec, 448.88 kflips/sec 340 pos 
+c restart 3 : best 357 (tmp 357), kflips 200, 0.24 sec, 847.46 kflips/sec 344 pos 
+c restart 7 : best 348 (tmp 348), kflips 800, 0.88 sec, 909.09 kflips/sec 345 pos 
+c restart 15 : best 348 (tmp 348), kflips 2400, 2.57 sec, 934.58 kflips/sec 348 pos 
+c restart 31 : best 318 (tmp 318), kflips 6400, 6.86 sec, 933.49 kflips/sec 364 pos 

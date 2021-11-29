@@ -1,4 +1,4 @@
-file=../xor6cut/xor6cut-26.cnf
+file=../xor6cut/xor6cut-$1.cnf
 
 for ((i=1;i<100;i++));
 do
@@ -10,6 +10,6 @@ do
   fi
   echo Running wp=$wp;
 
-  filename=wp-sweep/wp-$wp.log
+  filename=wp-sweep-$1/wp-$wp.log
   ./ubcsat -alg walksat -cutoff 10000000 -wp $wp -runs 10 -i $file > $filename;
 done
