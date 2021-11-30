@@ -59,6 +59,8 @@ void PickWalkSatSKC() {
   LITTYPE litPick;
   UINT32 iNumOcc;
 
+  iWp = 0.8
+
   iNumCandidates = 0;
   iBestScore = (SINT32) iNumClauses;
 
