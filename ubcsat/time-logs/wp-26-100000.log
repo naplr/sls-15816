@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 100000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1886830634 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.68 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   172                99820               100000
+      2 0   140                99561               100000
+      3 0   144                99842               100000
+      4 0   126                97089               100000
+      5 0   104                97928               100000
+      6 0    41                99585               100000
+      7 0    71                99402               100000
+      8 0    62                98957               100000
+      9 0    73                99469               100000
+     10 0   121                99935               100000
+
+
+Variables = 23301
+Clauses = 215862
+TotalLiterals = 1030050
+TotalCPUTimeElapsed = 1.350     
+FlipsPerSecond = 740741 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 100000
+Steps_CoeffVariance = 0
+Steps_Median = 100000
+CPUTime_Mean = 0.135
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 0.135
+
+

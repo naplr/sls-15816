@@ -1421,24 +1421,25 @@ void DefaultInitVars() {
   }
 
   for (j=1;j<=iNumVars;j++) {
-    if (aVarInit[j] >= 3) {
-      aVarValue[j] = iNextAlternating;
-      iNextAlternating = !iNextAlternating;
-    } else {
-      if (aVarInit[j] == 2) {
-        if (RandomInt(2)) {
-          aVarValue[j] = 1;
-        } else {
-          aVarValue[j] = 0;
-        }
-      } else {
-        if (aVarInit[j]) {
-          aVarValue[j] = 1;
-        } else {
-          aVarValue[j] = 0;
-        }
-      }
-    }
+    aVarValue[j] = 0;
+    /*if (aVarInit[j] >= 3) {*/
+      /*aVarValue[j] = iNextAlternating;*/
+      /*iNextAlternating = !iNextAlternating;*/
+    /*} else {*/
+      /*if (aVarInit[j] == 2) {*/
+        /*if (RandomInt(2)) {*/
+          /*aVarValue[j] = 1;*/
+        /*} else {*/
+          /*aVarValue[j] = 0;*/
+        /*}*/
+      /*} else {*/
+        /*if (aVarInit[j]) {*/
+          /*aVarValue[j] = 1;*/
+        /*} else {*/
+          /*aVarValue[j] = 0;*/
+        /*}*/
+      /*}*/
+    /*}*/
   }
 
   if (iInitVarFlip) {

@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 10000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1074030521 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.09 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   515              5713646             10000000
+      2 0   485               802468             10000000
+      3 0   494              2923119             10000000
+      4 0   488              6759997             10000000
+      5 0   491              4009780             10000000
+      6 0   513              9492891             10000000
+      7 0   445              4787667             10000000
+      8 0   473              2725452             10000000
+      9 0   517              3016598             10000000
+     10 0   502              6431326             10000000
+
+
+Variables = 23301
+Clauses = 215862
+TotalLiterals = 1030050
+TotalCPUTimeElapsed = 124.900   
+FlipsPerSecond = 800641 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 10000000
+Steps_CoeffVariance = 0
+Steps_Median = 10000000
+CPUTime_Mean = 12.49
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 12.49
+
+

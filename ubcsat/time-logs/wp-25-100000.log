@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 100000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 1865598696 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.68 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0    67                97774               100000
+      2 0    70                96781               100000
+      3 0   123                99458               100000
+      4 0   145                99063               100000
+      5 0    77                98531               100000
+      6 0   107                97538               100000
+      7 0   103                95719               100000
+      8 0   166               100000               100000
+      9 0    77                99833               100000
+     10 0    89                99557               100000
+
+
+Variables = 22545
+Clauses = 201279
+TotalLiterals = 941085
+TotalCPUTimeElapsed = 1.330     
+FlipsPerSecond = 751880 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 100000
+Steps_CoeffVariance = 0
+Steps_Median = 100000
+CPUTime_Mean = 0.133
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 0.133
+
+

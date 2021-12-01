@@ -1,0 +1,76 @@
+# 
+# UBCSAT version 1.2-b18 BETA -- avoid using for published results
+# 
+# http://ubcsat.dtompkins.com
+# 
+# ubcsat -h for help
+# 
+#  -alg walksat
+#  -runs 10 
+#  -cutoff 10000000 
+#  -timeout 0 
+#  -gtimeout 0 
+#  -abstime 0
+#  -systime 0
+#  -timeres 1000 
+#  -noimprove 0 
+#  -earlysteps 0 
+#  -earlyqual 0 
+#  -earlywqual 0 
+#  -strikes 0 
+#  -target 0 
+#  -wtarget 0 
+#  -seed 912058531 
+#  -solve 0
+#  -find,-numsol 0 
+#  -findunique 0 
+#  -srestart 0 
+#  -prestart 0 
+#  -drestart 0 
+# 
+#  -wp 0.09 
+# 
+# UBCSAT default output: 
+#    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
+# 
+# 
+# Output Columns: |run|found|best|beststep|steps|
+# 
+# run: Run Number
+# found: Target Solution Quality Found? (1 => yes)
+# best: Best (Lowest) # of False Clauses Found
+# beststep: Step of Best (Lowest) # of False Clauses Found
+# steps: Total Number of Search Steps
+# 
+#       F  Best                 Step                Total 
+#   Run N Sol'n                   of               Search 
+#   No. D Found                 Best                Steps 
+# 
+      1 0   513              4462346             10000000
+      2 0   514              1914655             10000000
+      3 0   447              1601954             10000000
+      4 0   507              6822738             10000000
+      5 0   473              2258231             10000000
+      6 0   503              3748167             10000000
+      7 0   460              1103946             10000000
+      8 0   489              7210505             10000000
+      9 0   538               919621             10000000
+     10 0   491              6432307             10000000
+
+
+Variables = 22545
+Clauses = 201279
+TotalLiterals = 941085
+TotalCPUTimeElapsed = 120.260   
+FlipsPerSecond = 831532 
+RunsExecuted = 10
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 10000000
+Steps_CoeffVariance = 0
+Steps_Median = 10000000
+CPUTime_Mean = 12.026
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 12.026
+
+

@@ -1,0 +1,41 @@
+gsat
+gsat -v simple
+gwsat
+gsat-tabu
+hsat
+hwsat
+jack
+walksat
+walksat-tabu
+novelty
+novelty+
+novelty+ -v cache
+novelty++
+novelty+p
+adaptnovelty+
+adaptnovelty+ -v params
+rnovelty
+rnovelty+
+saps
+rsaps
+sapsnr
+paws
+ddfw
+g2wsat
+adaptg2wsat
+sparrow
+sparrow -v sat11
+vw1
+vw2
+vw2 -v 2005
+rots
+irots
+samd
+urwalk
+crwalk
+crwalk -v schoening
+lllwalk
+dcrwalk
+danov+
+rgsat
+walksat-tabu -v nonull
