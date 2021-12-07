@@ -86,6 +86,7 @@ UINT32 iRunProceduresLoop;
 UINT32 iRunProceduresLoop2;
 UINT32 iSeed;
 UINT32 iStagnateRestart;
+UINT32 iExpoRestart;
 UBIGINT iStep;
 UINT32 iTarget;
 FLOAT fTimeOut;

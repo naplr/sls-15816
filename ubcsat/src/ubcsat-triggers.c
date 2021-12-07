@@ -4406,7 +4406,13 @@ void CheckForRestarts() {
       }
     }
   }
-}      
+  if (iExpoRestart) {
+    if (iStep > (iBestStepNumFalse * iExpoRestart)) {
+      bRestart = 1;
+      InitBestFalse();
+    }
+  }
+}
 
 void CreateFlipCounts() {
   aFlipCounts = (UBIGINT *) AllocateRAM((iNumVars+1)*sizeof(UBIGINT), HeapReports);

@@ -70,6 +70,9 @@ void AddParameters() {
   AddParmProbability(&parmUBCSAT,"-prestart","probabilistically restart at each step with probability PR","","CheckForRestarts",&iProbRestart,FLOATZERO);
   AddParmUInt(&parmUBCSAT,"-drestart","dynamic restart if no improvement in INT steps","similar to (-noimprove), except that -drestart restarts~the algorithm within the run instead of terminating the run","CheckForRestarts,BestFalse",&iStagnateRestart,0);
 
+  // NR
+  AddParmUInt(&parmUBCSAT,"-erestart","dynamic restart if no improvement in INT times number of last steps","similar to (-noimprove), except that -erestart restarts~the algorithm within the run instead of terminating the run","CheckForRestarts,BestFalse",&iExpoRestart,0);
+
   AddParmString(&parmIO,"-inst,-i","specify input instance file: (.cnf) or (.wcnf) format","if no file is specified, then UBCSAT reads from stdin~example: ubcsat < sample.cnf","",&sFilenameIn,"");
 
   AddParmString(&parmIO,"-varinitfile","variable initialization file","variables are initialized to specific values at the~start of each run and at restarts~~Example file:~  -1 3 -4 9 ~sets variables (3,9) to true and variables (1,4) to false~and all other variables would be initialized randomly","",&sFilenameVarInit,"");
