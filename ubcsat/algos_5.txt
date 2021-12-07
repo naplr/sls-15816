@@ -1,0 +1,8 @@
+sparrow
+sparrow -v sat11
+vw1
+vw2
+vw2 -v 2005
+rots
+irots
+samd

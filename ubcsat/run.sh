@@ -1,4 +1,4 @@
-cat algos.txt | while read line
+cat $1 | while read line
 do
   name=${line//[[:blank:]]/};
 

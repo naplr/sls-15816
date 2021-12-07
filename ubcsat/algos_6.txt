@@ -1,0 +1,8 @@
+urwalk
+crwalk
+crwalk -v schoening
+lllwalk
+dcrwalk
+danov+
+rgsat
+walksat-tabu -v nonull
