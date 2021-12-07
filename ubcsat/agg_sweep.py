@@ -1,4 +1,5 @@
 from os import listdir
+import sys
 import numpy as np
 
 
@@ -7,9 +8,11 @@ def process_lines(lines):
 
 
 if __name__ == '__main__':
-    with open ('./sweep.csv', 'w+') as out:
-        for fp in sorted(list(listdir('./wp-sweep'))):
-            with open ('./wp-sweep/{}'.format(fp), 'r') as f:
+    folder_path = sys.argv[1]
+    cnf = folder_path[-2:]
+    with open ('./sweep-{}.csv'.format(cnf), 'w+') as out:
+        for fp in sorted(list(listdir(folder_path))):
+            with open ('{}/{}'.format(folder_path, fp), 'r') as f:
                 num = fp[5:7]
                 lines = f.readlines()
 
