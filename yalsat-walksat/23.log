@@ -1,0 +1,119 @@
+c YalSAT Yet Another Local Search Solver
+c Sequential Standalone Version
+c Version 044 34f730fabec286764b3a9f079130cc0a29c2dc47
+c Copyright (C) 2013-2019 by Armin Biere, JKU, Linz, Austria.
+c Released Mi 24. Jun 19:01:51 CEST 2020
+c Compiled Tue Dec  7 23:48:34 EST 2021
+c Linux N-org-machine 5.4.0-72-generic x86_64
+c CC gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+c CFLAGS -Wall -DNDEBUG -O3
+c --best=0
+c --cached=1
+c --cacheduni=0
+c --cachemax=1024
+c --cachemin=1
+c --correct=0
+c --crit=1
+c --defrag=1
+c --eager=1
+c --fixed=4
+c --geomfreq=66
+c --hitlim=-1
+c --keep=0
+c --minchunksize=256
+c --pick=4
+c --pol=0
+c --prep=1
+c --rbfsrate=10
+c --reluctant=1
+c --restart=100000
+c --restartouter=0
+c --restartouterfactor=100
+c --setfpu=1
+c --termint=1000
+c --toggleuniform=0
+c --unfairfreq=50
+c --uni=0
+c --unipick=-1
+c --unirestarts=0
+c --verbose=1
+c --walk=1
+c --walkprobability=50
+c --weight=5
+c --witness=1
+c using specified seed 5732
+c no flips limit set (by default)
+c no mems limit set (by default)
+c parsing '../xor6cut/xor6cut-23.cnf'
+c parsed header 'p cnf 21033 186693'
+c clause variable ratio 8.88
+c finished parsing after 0.04 seconds
+c allocated 8.0 MB after parsing
+c set FPU mode to use double precision
+c found 50301 binary, 2916 ternary and 133476 large clauses
+c size of literal stack 1063572 (901005 for large clauses only)
+c connecting 186693 clauses
+c 21033 variables used out of 21034, 1 do not occur 0%
+c average clause length 4.70 (min 2, max 9)
+c using standard non-uniform strategy
+c clause variable ratio 8.876 = 186693 / 21033
+c average literal occurrence 41.69 (min 36, max 163)
+c picking clause by unfair BFS strategy
+c using queue for unsat clauses
+c 658 x 32-bit words per assignment (2632 bytes = 2 KB)
+c need 1 bytes per clause for counting satisfied literals
+c dynamically computing break values on-the-fly using critical literals
+c exponential base cb = 7.400000 for maxlen 9
+c exp2(<= -1573) = 4.94066e-324
+c pow(7.400000,(<= -545)) = 1.4822e-323
+c starting unlimited search
+c outer restarts disabled
+c picking new random assignment
+c forcing 0 initial phases
+c minimum 15905 : best 15905 (tmp 15905), kflips 0, 0.01 sec, 0.00 kflips/sec
+c restart 1 : best 15905 (tmp 15905), kflips 0, 0.01 sec, 0.00 kflips/sec
+c minimum 7952 : best 7952 (tmp 7952), kflips 19, 0.03 sec, 583.33 kflips/sec
+c minimum 3974 : best 3974 (tmp 3974), kflips 44, 0.05 sec, 892.28 kflips/sec
+c minimum 1987 : best 1987 (tmp 1987), kflips 56, 0.06 sec, 990.11 kflips/sec
+c minimum 987 : best 987 (tmp 987), kflips 64, 0.06 sec, 999.98 kflips/sec
+c minimum 493 : best 493 (tmp 493), kflips 66, 0.07 sec, 1002.75 kflips/sec
+c minimum 245 : best 245 (tmp 245), kflips 70, 0.07 sec, 1010.80 kflips/sec
+c minimum 122 : best 122 (tmp 122), kflips 73, 0.07 sec, 1014.23 kflips/sec
+c minimum 61 : best 61 (tmp 61), kflips 79, 0.08 sec, 1034.57 kflips/sec
+c minimum 30 : best 30 (tmp 30), kflips 98, 0.09 sec, 1143.44 kflips/sec
+c minimum 15 : best 15 (tmp 15), kflips 169, 0.12 sec, 1422.23 kflips/sec
+c restart 3 : best 14 (tmp 14), kflips 200, 0.13 sec, 1501.15 kflips/sec
+c minimum 7 : best 7 (tmp 7), kflips 613, 0.27 sec, 2272.23 kflips/sec
+c restart 7 : best 5 (tmp 5), kflips 800, 0.31 sec, 2587.98 kflips/sec
+c restart 15 : best 5 (tmp 21), kflips 2400, 0.96 sec, 2497.59 kflips/sec
+c restart 31 : best 5 (tmp 347), kflips 6400, 2.34 sec, 2732.66 kflips/sec
+c
+c UNKNOWN
+c 
+c final minimum of 5 unsatisfied clauses
+c restart time 0.099 seconds 3%
+c 38 inner restarts, 1600000 maximum interval
+c 0 outer restarts, 0 maximum interval
+c default strategy 10 29%, random strategy 25 71%
+c picked best=0 cached=18 keep=4 pos=4 neg=4 rnd=9
+c cached 26 assignments, 18 replaced 69%, 8 skipped, 8 size
+c 164 sigchecks, 164 negative 100%, 0 positive 0%, 0 false 0%
+c allocated max 6 chunks 16122 links 4559697 unfair
+c 96 defragmentations in 0.001 seconds 0%
+c moved 49590 in total and 516.6 on average per defragmentation
+c 13472648 broken, 1.48 broken/flip, 13600328 made, 1.49 made/flip
+c 342 maximum 0 minimum sum of weighted breaks
+c 61213.268 unsat clauses on average
+c 257645736 incs 2.002 avg satcnt, 257486253 decs 3.004 avg satcnt
+c inc0 1.49 5.28%, inc1 9.67 34.21%, inc2 8.25 29.19%, incl 8.85 31.32%
+c dec1 1.48 5.23%, dec2 9.66 34.22%, dec3 8.24 29.18%, decl 8.86 31.37%
+c megamems: 1270 all 100%, 16 lits 1%, 515 crit 41%, 206 weight 16%
+c megamems: 18 occs 1%, 0 read 0%, 515 update 41%
+c 352.4 million mems per second, 139.3 mems per flip
+c 3.6 seconds searching, 11.6 MB maximally allocated (12211940 bytes)
+c 9118845 flips, 2530.23 thousand flips per second
+c 5080549 eager best break flips 55.7%
+c 2231170 random walks 24.5%
+c minimum 5 hit 576253 times, maximum 16073
+c total process time of 3.64 seconds
+c maximally allocated 11.6 MB

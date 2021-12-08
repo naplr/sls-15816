@@ -1,2 +1,2 @@
-#define YALS_CC "gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516"
+#define YALS_CC "gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
 #define YALS_CFLAGS "-Wall -DNDEBUG -O3"

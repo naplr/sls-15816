@@ -1856,14 +1856,14 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  /*} else if (yals->strat.pol < 0) {*/
-    /*yals->stats.pick.neg++;*/
-    /*yals_msg (yals, vl, "picking all negative assignment");*/
-    /*memset (yals->vals, 0, bytes);*/
-  /*} else if (yals->strat.pol > 0) {*/
-    /*yals->stats.pick.pos++;*/
-    /*yals_msg (yals, vl, "picking all positive assignment");*/
-    /*memset (yals->vals, 0xff, bytes);*/
+  } else if (yals->strat.pol < 0) {
+    yals->stats.pick.neg++;
+    yals_msg (yals, vl, "picking all negative assignment");
+    memset (yals->vals, 0, bytes);
+  } else if (yals->strat.pol > 0) {
+    yals->stats.pick.pos++;
+    yals_msg (yals, vl, "picking all positive assignment");
+    memset (yals->vals, 0xff, bytes);
   } else {
     yals->stats.pick.rnd++;
     yals_msg (yals, vl, "picking new random assignment");
