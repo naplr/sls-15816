@@ -107,6 +107,7 @@ extern UINT32 iFindUnique;
 extern UINT32 iPeriodicRestart;
 extern PROBABILITY iProbRestart;
 extern UINT32 iStagnateRestart;
+extern UINT32 iExpoRestart;
 
 extern BOOL bRestart;
 

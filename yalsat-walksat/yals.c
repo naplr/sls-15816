@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------------*/
-/* Copyright 2013-2019 Armin Biere Johannes Kepler University Linz Austria */
+/* Copyright 2013-2020 Armin Biere Johannes Kepler University Linz Austria */
 /*-------------------------------------------------------------------------*/
 
 #include "yals.h"
@@ -17,10 +17,12 @@
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/resource.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #if defined(__linux__)
 #include <fpu_control.h>	// Set FPU to double precision on Linux.
@@ -210,7 +212,6 @@ enum ClausePicking {
 
 #define OPTSTEMPLATE \
   OPT (best,0,0,1,"always pick best assignment during restart"); \
-  OPT (breakzero,0,0,1,"always use break zero literal if possibe"); \
   OPT (cached,1,0,1,"use cached assignment during restart"); \
   OPT (cacheduni,0,0,1,"pick random cached assignment uniformly"); \
   OPT (cachemax,(1<<10),0,(1<<20),"max cache size of saved assignments"); \
@@ -218,11 +219,12 @@ enum ClausePicking {
   OPT (correct,0,0,1,"correct CB value depending on maximum length"); \
   OPT (crit,1,0,1,"dynamic break values (using critical lits)"); \
   OPT (defrag,1,0,1,"defragemtation of unsat queue"); \
+  OPT (eager,0,0,1,"eagerly pick minimum break literals"); \
   OPT (fixed,4,0,INT_MAX,"fixed default strategy frequency (1=always)"); \
   OPT (geomfreq,66,0,100,"geometric picking first frequency (percent)"); \
   OPT (hitlim,-1,-1,INT_MAX,"minimum hit limit"); \
   OPT (keep,0,0,1,"keep assignment during restart"); \
-  OPT (minchunksize,(1<<8),2,(1<<20),"minium queue chunk size"); \
+  OPT (minchunksize,(1<<8),2,(1<<16),"minium queue chunk size"); \
   OPT (pick,4,-1,4,"-1=pbfs,0=rnd,1=bfs,2=dfs,3=rbfs,4=ubfs"); \
   OPT (pol,0,-1,1,"negative=-1 positive=1 or random=0 polarity"); \
   OPT (prep,1,0,1,"preprocessing through unit propagation"); \
@@ -239,6 +241,8 @@ enum ClausePicking {
   OPT (unipick,-1,-1,4,"clause picking strategy for uniform formulas"); \
   OPT (unirestarts,0,0,INT_MAX,"max number restarts for uniform formulas"); \
   OPT (verbose,0,0,2,"set verbose level"); \
+  OPT (walk,0,0,1,"enable random walks"); \
+  OPT (walkprobability,50,1,100,"random walk probability (in percent)"); \
   OPT (weight,5,1,7,"maximum clause weight"); \
   OPT (witness,1,0,1,"print witness"); \
   OPTSTEMPLATENDEBUG
@@ -258,8 +262,10 @@ enum ClausePicking {
 #define STRATSTEMPLATE \
   STRAT (cached,1); \
   STRAT (correct,1); \
+  STRAT (eager,1); \
   STRAT (pol,1); \
   STRAT (uni,1); \
+  STRAT (walk,1); \
   STRAT (weight,1);
 
 #define STRAT(NAME,ENABLED) int NAME
@@ -301,7 +307,7 @@ do { \
 
 typedef struct RDS { unsigned u, v; } RDS;
 
-typedef struct RNG { unsigned z, w; } RNG;
+typedef struct RNG { uint64_t state; } RNG;
 
 typedef struct Mem {
   void * mgr;
@@ -314,7 +320,7 @@ typedef struct Strat { STRATSTEMPLATE } Strat;
 
 typedef struct Stats {
   int best, worst, last, tmp, maxstacksize;
-  int64_t flips, bzflips, hits, unsum;
+  int64_t flips, eagerflips, walks, hits, unsum;
   struct {
     struct { int64_t count; } outer;
     struct { int64_t count, maxint; } inner;
@@ -398,6 +404,7 @@ typedef struct FPU {
 struct Yals {
   RNG rng;
   FILE * out;
+  struct { int out, err; } colored;
   struct { int usequeue; Queue queue; STACK(int) stack; } unsat;
   int nvars, * refs; int64_t * flips;
   STACK(signed char) mark;
@@ -436,11 +443,34 @@ static void yals_msgunlock (Yals * yals) {
   if (yals->cbs.msg.unlock) yals->cbs.msg.unlock (yals->cbs.msg.state);
 }
 
+/*------------------------------------------------------------------------*/
+
+const char * yals_bright_red_color_code = "\033[1;31m";
+const char * yals_bright_yellow_color_code = "\033[1;33m";
+const char * yals_normal_color_code = "\033[0m";
+const char * yals_bold_color_code = "\033[1m";
+
+#define yals_color(CODE,NAME) \
+(yals->colored.NAME ? yals_ ## CODE ## _color_code : "")
+
+/*------------------------------------------------------------------------*/
+
+static void yals_error (Yals * yals, const char * msg) {
+  fputs (yals_color (bold, err), stderr);
+  fputs ("libyals: ", stderr);
+  fputs (yals_color (normal, err), stderr);
+  fputs (yals_color (bright_red, err), stderr);
+  fputs (msg, stderr);
+  fputc (':', stderr);
+  fputs (yals_color (normal, err), stderr);
+  fputc (' ', stderr);
+}
+
 void yals_abort (Yals * yals, const char * fmt, ...) {
   va_list ap;
   yals_msglock (yals);
   fflush (yals->out);
-  fprintf (stderr, "%s*** libyals abort: ", yals->opts.prefix);
+  yals_error (yals, "abort");
   va_start (ap, fmt);
   vfprintf (stderr, fmt, ap);
   va_end (ap);
@@ -454,7 +484,7 @@ void yals_exit (Yals * yals, int exit_code, const char * fmt, ...) {
   va_list ap;
   yals_msglock (yals);
   fflush (yals->out);
-  fprintf (stderr, "%s*** libyals exit: ", yals->opts.prefix);
+  yals_error (yals, "exit");
   va_start (ap, fmt);
   vfprintf (stderr, fmt, ap);
   va_end (ap);
@@ -467,7 +497,8 @@ void yals_exit (Yals * yals, int exit_code, const char * fmt, ...) {
 void yals_warn (Yals * yals, const char * fmt, ...) {
   va_list ap;
   yals_msglock (yals);
-  fprintf (yals->out, "%sWARNING ", yals->opts.prefix);
+  fputs (yals->opts.prefix, yals->out);
+  yals_error (yals, "warning");
   va_start (ap, fmt);
   vfprintf (yals->out, fmt, ap);
   va_end (ap);
@@ -557,31 +588,12 @@ static double yals_time (Yals * yals) {
 }
 
 static void yals_flush_time (Yals * yals) {
-  double time, entered;
-#ifdef __GNUC__
-  int old;
-  // begin{atomic}
-  old = __sync_val_compare_and_swap (&yals->stats.flushing_time, 0, 42);
-  assert (old == 0 || old == 42);
-  if (old) return;
-  //
-  // TODO I still occasionally have way too large kflips/sec if interrupted
-  // and I do not know why?  Either there is a bug in flushing or there is
-  // still a data race here and I did not apply this CAS sequence correctly.
-  //
-#endif
-  time = yals_time (yals);
-  entered = yals->stats.time.entered;
+  double time = yals_time (yals);
+  double entered = yals->stats.time.entered;
   yals->stats.time.entered = time;
   assert (time >= entered);
   time -= entered;
   yals->stats.time.total += time;
-#ifdef __GNUC__
-  old = __sync_val_compare_and_swap (&yals->stats.flushing_time, 42, 0);
-  assert (old == 42);
-  (void) old;
-  // end{atomic}
-#endif
 }
 
 double yals_sec (Yals * yals) {
@@ -657,27 +669,25 @@ static void yals_rds (RDS * r) {
 /*------------------------------------------------------------------------*/
 
 void yals_srand (Yals * yals, unsigned long long seed) {
-  unsigned z = seed >> 32, w = seed;
-  if (!z) z = ~z;
-  if (!w) w = ~w;
-  yals->rng.z = z, yals->rng.w = w;
+  yals->rng.state = seed;
   yals_msg (yals, 2, "setting random seed %llu", seed);
 }
 
 static unsigned yals_rand (Yals * yals) {
-  unsigned res;
-  yals->rng.z = 36969 * (yals->rng.z & 65535) + (yals->rng.z >> 16);
-  yals->rng.w = 18000 * (yals->rng.w & 65535) + (yals->rng.w >> 16);
-  res = (yals->rng.z << 16) + yals->rng.w;
-  return res;
+  uint64_t state = yals->rng.state;
+  state *= 6364136223846793005ul;
+  state += 1442695040888963407ul;
+  yals->rng.state = state;
+  return state >> 32;
 }
 
 static unsigned yals_rand_mod (Yals * yals, unsigned mod) {
-  unsigned res;
   assert (mod >= 1);
   if (mod <= 1) return 0;
-  res = yals_rand (yals);
-  res %= mod;
+  const double fraction = yals_rand (yals) / 4294967296.0;
+  assert (0 <= fraction), assert (fraction < 1);
+  const unsigned res = fraction * mod;
+  assert (res < mod);
   return res;
 }
 
@@ -870,7 +880,9 @@ static void yals_save_new_minimum (Yals * yals) {
   memcpy (yals->best, yals->vals, bytes);
   if (yals->opts.verbose.val >= 2 ||
       (yals->opts.verbose.val >= 1 && nunsat <= yals->limits.report.min/2)) {
-    yals_report (yals, "new minimum");
+    yals_report (yals,
+      "%sminimum %d%s",
+      yals_color (bright_yellow, out), nunsat, yals_color (normal, out));
     yals->limits.report.min = nunsat;
   }
 }
@@ -1114,36 +1126,57 @@ static int yals_pick_by_score (Yals * yals) {
 /*------------------------------------------------------------------------*/
 
 static int yals_pick_literal (Yals * yals, int cidx) {
-  const int pick_break_zero = yals->opts.breakzero.val;
+  const int eager = yals->strat.eager;
   const int * p, * lits;
-  int lit, zero;
-  unsigned w;
+  unsigned w, best_w;
   double s;
+  int lit;
 
   assert (EMPTY (yals->breaks));
   assert (EMPTY (yals->cands));
 
   lits = yals_lits (yals, cidx);
 
-  zero = 0;
+  best_w = UINT_MAX;
+
   for (p = lits; (lit = *p); p++) {
     w = yals_determine_weighted_break (yals, lit);
     LOG ("literal %d weighted break %u", lit, w);
-    if (pick_break_zero && !w) {
-      if (!zero++) CLEAR (yals->cands);
-      PUSH (yals->cands, lit);
-    } else if (!zero) {
+    if (!eager) {
       PUSH (yals->breaks, w);
       PUSH (yals->cands, lit);
-    }
+      if (w < best_w) best_w = w;
+    } else if (w < best_w) {
+      best_w = w;
+      CLEAR (yals->cands);
+      PUSH (yals->cands, lit);
+    } else if (w == best_w)
+      PUSH (yals->cands, lit);
   }
 
-  if (zero) {
+  int walk;
+  if (best_w &&
+      yals->strat.walk &&
+      (int) yals_rand_mod (yals, 101) <= yals->opts.walkprobability.val)
+    walk = 1;
+  else
+    walk = 0;
 
-    yals->stats.bzflips++;
-    assert (zero == COUNT (yals->cands));
-    lit = yals->cands.start[yals_rand_mod (yals, zero)];
-    LOG ("picked random break zero literal %d out of %d", lit, zero);
+  if (walk) {
+
+    yals->stats.walks++;
+    const unsigned size = p - lits;
+    const unsigned pos = yals_rand_mod (yals, size);
+    lit = lits[pos];
+    LOG ("picked random walk literal %d at position %u", lit, pos);
+  
+  } else if (eager) {
+
+    yals->stats.eagerflips++;
+    const int size = COUNT (yals->cands);
+    lit = yals->cands.start[yals_rand_mod (yals, size)];
+    LOG ("picked eager best break weight %u literal %d out of %d",
+         best_w, lit, size);
 
   } else {
 
@@ -1856,14 +1889,14 @@ static void yals_pick_assignment (Yals * yals, int initial) {
       "picking cached assignment %d with minimum %d",
       pos, PEEK (yals->mins, pos));
     memcpy (yals->vals, PEEK (yals->cache, pos), bytes);
-  /*} else if (yals->strat.pol < 0) {*/
-    /*yals->stats.pick.neg++;*/
-    /*yals_msg (yals, vl, "picking all negative assignment");*/
-    /*memset (yals->vals, 0, bytes);*/
-  /*} else if (yals->strat.pol > 0) {*/
-    /*yals->stats.pick.pos++;*/
-    /*yals_msg (yals, vl, "picking all positive assignment");*/
-    /*memset (yals->vals, 0xff, bytes);*/
+  } else if (yals->strat.pol < 0) {
+    yals->stats.pick.neg++;
+    yals_msg (yals, vl, "picking all negative assignment");
+    memset (yals->vals, 0, bytes);
+  } else if (yals->strat.pol > 0) {
+    yals->stats.pick.pos++;
+    yals_msg (yals, vl, "picking all positive assignment");
+    memset (yals->vals, 0xff, bytes);
   } else {
     yals->stats.pick.rnd++;
     yals_msg (yals, vl, "picking new random assignment");
@@ -1952,7 +1985,7 @@ static void yals_init_weight_to_score_table (Yals * yals) {
   else if (maxlen <= 4) cb = 2.85;
   else if (maxlen <= 5) cb = 3.7;
   else if (maxlen <= 6) cb = 5.1;
-  else                  cb = 5.4;
+  else                  cb = 7.4;
 
   yals_msg (yals, 1,
     "exponential base cb = %f for maxlen %d",
@@ -2318,7 +2351,12 @@ int yals_getopt (Yals * yals, const char * name) {
 #define USGOPT(NAME,DEFAULT,MIN,MAX,DESCRIPTION) \
 do { \
   char BUFFER[120]; int I; \
-  sprintf (BUFFER, "--%s=%d..%d", #NAME, (MIN), (MAX)); \
+  sprintf (BUFFER, "  --%s=%d", #NAME, (MIN)); \
+  if ((MAX) != INT_MAX) \
+    sprintf (BUFFER + strlen (BUFFER), "..%d", (MAX)); \
+  else \
+    strcat (BUFFER, "..."); \
+  assert (strlen (BUFFER) < sizeof (BUFFER)); \
   fputs (BUFFER, yals->out); \
   for (I = 28 - strlen (BUFFER); I > 0; I--) fputc (' ', yals->out); \
   fprintf (yals->out, "%s [%d]\n", (DESCRIPTION), (int)(DEFAULT)); \
@@ -2408,6 +2446,8 @@ Yals * yals_new_with_mem_mgr (void * mgr,
   if (!yals) yals_abort (0, "out-of-memory allocating manager in 'yals_new'");
   memset (yals, 0, sizeof *yals);
   yals->out = stdout;
+  yals->colored.out = isatty (1);
+  yals->colored.err = isatty (2);
   yals->mem.mgr = mgr;
   yals->mem.malloc = m;
   yals->mem.realloc = r;
@@ -2430,6 +2470,8 @@ Yals * yals_new_with_mem_mgr (void * mgr,
 #endif
 #if 0
   if (getenv ("YALSAMPLES") && getenv ("YALSMOD")) {
+    if (getenv ("YALSEED"))
+      yals_srand (yals, atoi (getenv ("YALSEED")));
     int s = atoi (getenv ("YALSAMPLES")), i;
     int m = atoi (getenv ("YALSMOD"));
     double start = yals_time (yals), delta;
@@ -2522,6 +2564,8 @@ void yals_setprefix (Yals * yals, const char * prefix) {
 
 void yals_setout (Yals * yals, FILE * out) {
   yals->out = out;
+  if (out == stdin) yals->colored.out = isatty (1);
+  if (out == stderr) yals->colored.out = isatty (2);
 }
 
 void yals_setphase (Yals * yals, int lit) {
@@ -3111,8 +3155,8 @@ const int * yals_minlits (Yals * yals) {
 /*------------------------------------------------------------------------*/
 
 void yals_stats (Yals * yals) {
-  Stats * s = &yals->stats;
-  double t = s->time.total;
+  const double t = yals_sec (yals);
+  const Stats * s = &yals->stats;
   int64_t sum;
   yals_msg (yals, 0,
     "restart time %.3f seconds %.0f%%",
@@ -3255,9 +3299,14 @@ void yals_stats (Yals * yals) {
     t, s->allocated.max/(double)(1<<20), (long long) s->allocated.max);
 
   yals_msg (yals, 0,
-    "%lld flips, %.1f thousand flips per second, %lld break zero %.1f%%",
-    (long long) s->flips, yals_avg (s->flips/1e3, t),
-    s->bzflips, yals_pct (s->bzflips, s->flips));
+    "%lld flips, %.2f thousand flips per second",
+    (long long) s->flips, yals_avg (s->flips/1e3, t));
+  yals_msg (yals, 0,
+    "%lld eager best break flips %.1f%%",
+    (long long) s->eagerflips, yals_pct (s->eagerflips, s->flips));
+  yals_msg (yals, 0,
+     "%lld random walks %.1f%%",
+    (long long) s->walks, yals_pct (s->walks, s->flips));
 
   yals_msg (yals, 0,
     "minimum %d hit %lld times, maximum %d",

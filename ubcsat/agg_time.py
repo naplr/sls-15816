@@ -8,11 +8,10 @@ def process_lines(lines):
 
 
 if __name__ == '__main__':
-    folder_path = sys.argv[1]
-    with open ('./agg-{}.csv'.format(folder_path, 'w+') as out:
-        for fp in listdir(folder_path):
-            with open ('{}/{}'.format(folder_path, fp), 'r') as f:
-                num = fp[-6:-4]
+    with open ('./time.csv', 'w+') as out:
+        for fp in sorted(list(listdir('./time-logs'))):
+            with open ('./time-logs/{}'.format(fp), 'r') as f:
+                name, cnf, time = fp[:-4].split('-')
                 lines = f.readlines()
 
                 idx = 0
@@ -22,5 +21,5 @@ if __name__ == '__main__':
                 bests = process_lines(lines[idx:idx+10])
 
                 out.write(
-                    '{}\t{}\t{}\t{}\n'.format(num, fp[:-6], min(bests), np.mean(bests))
+                    '{}\t{}\t{}\t{}\t{}\n'.format(name, cnf, time, min(bests), np.mean(bests))
                 )
