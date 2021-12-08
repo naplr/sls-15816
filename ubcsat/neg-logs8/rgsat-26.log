@@ -5,7 +5,7 @@
 # 
 # ubcsat -h for help
 # 
-#  -alg hwsat
+#  -alg rgsat
 #  -runs 10 
 #  -cutoff 10000000 
 #  -timeout 0 
@@ -20,7 +20,7 @@
 #  -strikes 0 
 #  -target 0 
 #  -wtarget 0 
-#  -seed 1518994510 
+#  -seed 1817470500 
 #  -solve 0
 #  -find,-numsol 0 
 #  -findunique 0 
@@ -28,7 +28,6 @@
 #  -prestart 0 
 #  -drestart 0 
 # 
-#  -wp 0.1 
 # 
 # UBCSAT default output: 
 #    'ubcsat -r out null' to suppress, 'ubcsat -hc' for customization help
@@ -46,31 +45,31 @@
 #   Run N Sol'n                   of               Search 
 #   No. D Found                 Best                Steps 
 # 
-      1 0     1              1592808             10000000
-      2 0     2              4363193             10000000
-      3 0     3               169144             10000000
-      4 1     0              1456045              1456045
-      5 0     2              5676563             10000000
-      6 0     2              4706426             10000000
-      7 1     0               326181               326181
-      8 0     2              3417383             10000000
-      9 0     1                76723             10000000
-     10 0     1              1408865             10000000
+      1 0    53                   53             10000000
+      2 0    53                   53             10000000
+      3 0    53                   53             10000000
+      4 0    53                   53             10000000
+      5 0    53                   53             10000000
+      6 0    53                   53             10000000
+      7 0    53                   53             10000000
+      8 0    53                   53             10000000
+      9 0    53                   53             10000000
+     10 0    53                   53             10000000
 
 
-Variables = 24786
-Clauses = 221697
-TotalLiterals = 1046115
-TotalCPUTimeElapsed = 1325.920  
-FlipsPerSecond = 61680  
+Variables = 23301
+Clauses = 215862
+TotalLiterals = 1030050
+TotalCPUTimeElapsed = 6058.790  
+FlipsPerSecond = 16505  
 RunsExecuted = 10
-SuccessfulRuns = 2
-PercentSuccess = 20.00 
-Steps_Mean = 8178222.6
-Steps_CoeffVariance = 0.470746048615
+SuccessfulRuns = 0
+PercentSuccess = 0.00  
+Steps_Mean = 10000000
+Steps_CoeffVariance = 0
 Steps_Median = 10000000
-CPUTime_Mean = 132.592
-CPUTime_CoeffVariance = 0.470746048615
-CPUTime_Median = 162.12813772
+CPUTime_Mean = 605.879
+CPUTime_CoeffVariance = 0
+CPUTime_Median = 605.879
 
 

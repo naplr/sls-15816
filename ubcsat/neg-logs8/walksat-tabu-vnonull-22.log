@@ -20,7 +20,7 @@
 #  -strikes 0 
 #  -target 0 
 #  -wtarget 0 
-#  -seed 1717982462 
+#  -seed 1876118496 
 #  -solve 0
 #  -find,-numsol 0 
 #  -findunique 0 
@@ -47,31 +47,31 @@
 #   Run N Sol'n                   of               Search  Age of 
 #   No. D Found                 Best                Steps    Vars 
 # 
-      1 0    23                 1028             10000000 19440.1
-      2 0    23                  446             10000000 19439.4
-      3 0    21                  859             10000000 19444.9
-      4 0    21                  707             10000000 19446.3
-      5 0    19                 1752             10000000 19449.7
-      6 0    17                 1125             10000000 19435.4
-      7 0    23                  839             10000000 19434.6
-      8 0    22                  554             10000000 19438.6
-      9 0    19                  482             10000000 19434.5
-     10 0    18                  995             10000000 19443.2
+      1 0    27                  828             10000000 19434.7
+      2 0    22                  871             10000000 19438.5
+      3 0    19                 1356             10000000 19440.0
+      4 0    21                  839             10000000 19439.6
+      5 0    33                  474             10000000 19443.7
+      6 0    23                  783             10000000 19441.6
+      7 0    21                 1216             10000000 19439.0
+      8 0    23                 1711             10000000 19436.0
+      9 0    22                 1671             10000000 19442.5
+     10 0    32                  560             10000000 19443.4
 
 
 Variables = 19548
 Clauses = 180858
 TotalLiterals = 860814
-TotalCPUTimeElapsed = 122.160   
-FlipsPerSecond = 818599 
+TotalCPUTimeElapsed = 121.590   
+FlipsPerSecond = 822436 
 RunsExecuted = 10
 SuccessfulRuns = 0
 PercentSuccess = 0.00  
 Steps_Mean = 10000000
 Steps_CoeffVariance = 0
 Steps_Median = 10000000
-CPUTime_Mean = 12.216
+CPUTime_Mean = 12.159
 CPUTime_CoeffVariance = 0
-CPUTime_Median = 12.216
+CPUTime_Median = 12.159
 
 
